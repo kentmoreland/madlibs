@@ -1,80 +1,374 @@
 
-
+<div id="cafeteria-page">
 <div class="row">
-	<div class="col-md-10 col-md-push-2" >
-			<p id="contentForm">
+	<div id="cafeteria-content-wrapper" ng-controller="CafeteriaController" class="col-md-5">
+			<h1 id="storyTitle">Our Cafeteria</h1>
+			<div id="blinder-button-container">
+			<button id="blinders" ng-click="toggleBlindMode()" >B0)</button>
+			</div>
+			<p ng-hide="blindersOn" id="content-form">
 			Our school Cafeteria has really 
-			<span id="wordOne" class="word"><span ng-hide='one.length'>_____</span>{{one}}</span> food. 
+			<span id="wordOne" class="word"><span ng-hide='one.length || clicked1'>1._____</span> <span ng-hide="clicked1">{{one}}</span>
+
+			<span ng-hide="!clicked1">{{pickAdj1}}</span> </span> food. 
 
 			Just thinking about it makes my stomach  
-			<span id="wordTwo" class="word"><span ng-hide='two.length'>_____</span>{{two}}</span>. 
+			<span id="wordTwo" class="word"><span ng-hide='two.length || clicked2'>2._____</span>{{two}}<span ng-hide="!clicked2">{{pickVerb2}}</span></span>. 
 
 			The sphaghetti is 
-			 <span id="wordThree" class="word"><span ng-hide='three.length'>_____</span>{{three}}</span> and tastes like 
+			 <span id="wordThree" class="word"><span ng-hide='three.length || clicked3'>3._____</span>{{three}}<span ng-hide="!clicked3">{{pickAdj3}}</span></span> and tastes like 
 			 
 			  
-			 <span id="wordFour" class="word"><span ng-hide='four.length'>_____</span>{{four}}</span>. 
+			 <span id="wordFour" class="word"><span ng-hide='four.length || clicked4'>4._____</span>{{four}}<span ng-hide="!clicked4">{{pickNoun4}}</span></span>. 
 
 			One day, I swear one of my meatballs started to 
-			<span id="wordFive" class="word"><span ng-hide='five.length'>_____</span>{{five}}</span>! 
+			<span id="wordFive" class="word"><span ng-hide='five.length || clicked5'>5._____</span>{{five}}<span ng-hide="!clicked5">{{pickVerb5}}</span></span> ! 
 
 			The turkey tacos are totally 
-			<span id="wordSix" class="word"><span ng-hide='six.length'>_____</span>{{six}}</span> and look kind of like old 
+			<span id="wordSix" class="word"><span ng-hide='six.length || clicked6'>6._____</span>{{six}}<span ng-hide="!clicked6">{{pickAdj6}}</span></span> and look kind of like old 
 			
 
-			<span id="wordSeven" class="word"><span ng-hide='seven.length'>_____</span>{{seven}}</span>. 
+			<span id="wordSeven" class="word"><span ng-hide='seven.length || clicked7'>7._____</span>{{seven}}<span ng-hide="!clicked7">{{pickNoun7}}</span></span>. 
 
 			My friend Dana actually likes the meatloaf, even though it's 
-			<span id="wordEight" class="word"><span ng-hide='eight.length'>_____</span>{{eight}}</span> and 
+			<span id="wordEight" class="word"><span ng-hide='eight.length || clicked8'>8._____</span>{{eight}}<span ng-hide="!clicked8">{{pickAdj8}}</span></span> and 
 			
 
-			<span id="wordNine" class="word"><span ng-hide='nine.length'>_____</span>{{nine}}</span>. 
+			<span id="wordNine" class="word"><span ng-hide='nine.length || clicked9'>9._____</span>{{nine}}<span ng-hide="!clicked9">{{pickAdj9}}</span></span>. 
 
 			I call it "mystery meatloaf" and think it's really made out of 
 
-			<span id="wordTen" class="word"><span ng-hide='ten.length'>_____</span>{{ten}}</span>. 
+			<span id="wordTen" class="word"><span ng-hide='ten.length || clicked10'>10._____</span>{{ten}}<span ng-hide="!clicked10">{{pickNoun10}}</span></span>. 
 
 			My dad said he'd make my lunches, but the first day, he made me a sandwich out of 
 
-			<span id="wordEleven"class="word"><span ng-hide='eleven.length'>_____</span>{{eleven}}</span> and peanut butter! I think I'd rather take my chances with the cafeteria.
+			<span id="wordEleven"class="word"><span ng-hide='eleven.length || clicked11'>11._____</span>{{eleven}}<span ng-hide="!clicked11">{{pickNoun11}}</span></span> and peanut butter! I think I'd rather take my chances with the cafeteria.
 			</p>
-			<button id="finish" ng-click="test = true" >finish</button>
+			<div id="exit-button-container">
+			<a href="#/home" id="exit-button" class="btn btn-info" role="button">Exit</a>
+			</div>
 	</div>
 
-	<div class="col-md-2 col-md-pull-10">
-		<form ng-submit="submit()">
-	 	<div><input ng-model="one" name="one"  type="text" placeholder=" One - Adjective"></div>
 
-		<div><input ng-model="two" name="two"  type="text" placeholder=" Two - Verb"></div>
+	<div id="blanks-wrapper" class="col-md-5">
+		
+		<form name="blanks" ng-submit="submit()" novalidate>
+	 		<div>
+			 	<!-- input blank -->
+			 	
+			 	<input class="input-blank" 
+			 			ng-model="one"
+			 			name="one"  
+			 			type="text" 
+			 			ng-maxlength="20" 
+			 			placeholder="1. Adjective" 
+			 			ng-hide="clicked1"
+			 			ng-change=""
+			 			required>
+			 			<span class="blue gimme-button" ng-hide="!clicked1">You Took a Gimme</span> 
+			 			<button class="gimme" ng-click="blanks.one.$invalid = false; blanks.one.$valid = true; clicked1 = true; blanks.one.$error = false" ng-disabled="clicked1" >:0)</button>
+				
+				<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.one.$error" 
+			 		 ng-show="blanks.one.$dirty">
+					 
+			 		<p ng-message="maxlength">Choose a shorter word</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+								 			
+			 	</div>
+			</div> 
 
-		<div><input ng-model="three" name="three"  type="text" placeholder="Three - Adjective"></div>
+			<div>
+				<input class="input-blank" 
+							ng-model="two" 
+							name="two"  
+							type="text" 
+							ng-maxlength="20" 
+							placeholder=" 2. Verb"
+							ng-hide="clicked2"
+							required>
+							<span class="blue gimme-button" ng-hide="!clicked2">You Took a Gimme </span> 
+							<button class="gimme" ng-click="blanks.two.$invalid = false; blanks.two.$valid = true; clicked2 = true; blanks.two.$error = false" ng-disabled="clicked2" >:0)</button>
 
-		<div><input ng-model="four" name="four"  type="text" placeholder=" Four - Noun"></div>
+				<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.two.$error" 
+			 		 ng-show="blanks.two.$dirty" >
 
-		<div><input ng-model="five" name="five"  type="text" placeholder=" Five - Verb"></div>
+			 		<p ng-message="maxlength"> too long</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+			 	</div>
+			</div>
 
-		<div><input ng-model="six" name="six"  type="text" placeholder=" Six - Adjective"></div>
+			<div>
+				<input class="input-blank" 
+					   ng-model="three" 
+					   name="three"  
+					   type="text" 
+					   ng-maxlength="20" 
+					   placeholder=" 3. Adjective" 
+					   ng-hide="clicked3"
+					   required>
+					   <span class="blue gimme-button" ng-hide="!clicked3">You Took a Gimme </span>						    
+					   <button class="gimme" ng-click="blanks.three.$invalid = false; blanks.three.$valid = true; clicked3 = true; blanks.three.$error = false" ng-disabled="clicked3" >:0)</button>
+				<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.three.$error" 
+			 		 ng-show="blanks.three.$dirty" >
 
-		<div><input ng-model="seven" name="seven"  type="text" placeholder="Seven - Noun"></div>
+			 		<p ng-message="maxlength"> too long</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+			 	</div>
+			</div>
 
-		<div><input ng-model="eight" name="eight"  type="text" placeholder=" Eight - Adjective"></div>
+			<div>
+				<input class="input-blank" 
+				       ng-model="four" 
+				       name="four"  
+					   type="text" 
+					   ng-maxlength="20" 
+					   placeholder=" 4. Noun" 
+					   ng-hide="clicked4"
+					   required>
+					   <span class="blue gimme-button" ng-hide="!clicked4">You Took a Gimme </span>
+					   <button class="gimme" ng-click="blanks.four.$invalid = false; blanks.four.$valid = true; clicked4 = true; blanks.four.$error = false" ng-disabled="clicked4" >:0)</button>
 
-		<div><input ng-model="nine" name="nine"  type="text" placeholder=" Nine - Adjective"></div>
 
-		<div><input ng-model="ten" name="ten"  type="text" placeholder=" Ten - Noun"></div>
+				<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.four.$error" 
+			 		 ng-show="blanks.four.$dirty" >
 
-		<div><input ng-model="eleven" name="eleven"  type="text" placeholder=" Eleven - Noun"></div>
+			 		<p ng-message="maxlength"> too long</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+			 	</div>
+			</div>	
 
-		<div><button type="submit">submit</button></div>
-		</form>
-	</div>
+			<div>
+				<input class="input-blank" 
+					   ng-model="five" 
+					   name="five"  
+					   type="text" 
+					   ng-maxlength="20" 
+					   placeholder=" 5. Verb"
+					   ng-hide="clicked5"
+					   required>
+					   <span class="blue gimme-button" ng-hide="!clicked5">You Took a Gimme </span>
+						<button class="gimme" ng-click="blanks.five.$invalid = false; blanks.five.$valid = true; clicked5 = true; blanks.five.$error = false" ng-disabled="clicked5">:0)</button>
+
+				<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.five.$error" 
+			 		 ng-show="blanks.five.$dirty" >
+
+			 		<p ng-message="maxlength"> too long</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+			 	</div>
+			</div>
+
+			<div>
+				<input class="input-blank" 
+					   ng-model="six" 
+					   name="six"  
+					   type="text" 
+					   ng-maxlength="20" 
+					   placeholder=" 6. Adjective" 
+					   ng-hide="clicked6"
+					   required>
+					   <span class="blue gimme-button" ng-hide="!clicked6">You Took a Gimme </span>
+					   <button class="gimme" ng-click="blanks.six.$invalid = false; blanks.six.$valid = true;clicked6 = true; blanks.six.$error = false" ng-disabled="clicked6">:0)</button>
+				
+				<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.six.$error" 
+			 		 ng-show="blanks.six.$dirty" >
+
+			 		<p ng-message="maxlength"> too long</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+			 	</div>
+			</div>
+
+			<div>
+				<input class="input-blank" 
+					   ng-model="seven" 
+					   name="seven"  
+					   type="text" 
+					   ng-maxlength="20" 
+					   placeholder=" 7. Noun" 
+					   ng-hide="clicked7"
+					   required>
+					   <span class="blue gimme-button" ng-hide="!clicked7">You Took a Gimme </span>
+					   <button class="gimme" ng-click="blanks.seven.$invalid = false; blanks.seven.$valid = true; clicked7 = true; blanks.seven.$error = false" ng-disabled="clicked7" >:0)</button>
+				
+				<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.seven.$error" 
+			 		 ng-show="blanks.seven.$dirty" >
+
+			 		<p ng-message="maxlength"> too long</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+			 	</div>
+			</div>
+
+			<div>
+				<input class="input-blank" 
+					   ng-model="eight" 
+					   name="eight"  
+					   type="text" 
+					   ng-maxlength="20" 
+					   placeholder=" 8. Adjective"
+					   ng-hide="clicked8"
+					   required>
+					   <span class="blue gimme-button" ng-hide="!clicked8">You Took a Gimme </span>
+					   <button class="gimme" ng-click="blanks.eight.$invalid = false; blanks.eight.$valid = true; clicked8 = true; blanks.eight.$error = false" ng-disabled="clicked8" >:0)</button>
+
+				<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.eight.$error" 
+			 		 ng-show="blanks.eight.$dirty" >
+
+			 		<p ng-message="maxlength"> too long</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+			 	</div>
+			</div>
+
+			<div>
+				<input class="input-blank" 
+					   ng-model="nine" 
+					   name="nine"  
+					   type="text" 
+					   ng-maxlength="20" 
+					   placeholder=" 9. Adjective" 
+					   ng-hide="clicked9"
+					   required>
+					   <span class="blue gimme-button" ng-hide="!clicked9">You Took a Gimme </span>
+					   <button class="gimme" ng-click="blanks.nine.$invalid = false; blanks.nine.$valid = true; clicked9 = true; blanks.nine.$error = false" ng-disabled="clicked9" >:0)</button>
+
+					<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.nine.$error" 
+			 		 ng-show="blanks.nine.$dirty" >
+
+			 		<p ng-message="maxlength"> too long</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+			 	</div>
+			</div>
+
+			<div>
+				<input class="input-blank" 
+					   ng-model="ten" 
+					   name="ten"  
+					   type="text" 
+					   ng-maxlength="20" 
+					   placeholder="10. Noun" 
+					   ng-hide="clicked10"
+					   required>
+					   <span class="blue gimme-button" ng-hide="!clicked10">You Took a Gimme </span>
+					   <button class="gimme" ng-click="blanks.ten.$invalid = false; blanks.ten.$valid = true; clicked10 = true; blanks.ten.$error = false" ng-disabled="clicked10" >:0)</button>
+
+				<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.ten.$error" 
+			 		 ng-show="blanks.ten.$dirty" >
+
+			 		<p ng-message="maxlength"> too long</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+			 	</div>
+			</div>
+
+			<div>
+				<input class="input-blank" 
+					   ng-model="eleven" 
+					   name="eleven"  
+					   type="text" 
+					   ng-maxlength="20" 
+					   placeholder=" 11. Noun" 
+					   ng-hide="clicked11"
+					   required>
+					   <span class="blue gimme-button" ng-hide="!clicked11">You Took a Gimme </span>
+					   <button class="gimme" ng-click="blanks.eleven.$invalid = false; blanks.eleven.$valid = true; clicked11 = true; blanks.eleven.$error = false" >:0)</button>
+
+
+				<!-- Error messages -->
+			 	<div class="error" 
+			 		 ng-messages="blanks.eleven.$error" 
+			 		 ng-show="blanks.eleven.$dirty" >
+
+			 		<p ng-message="maxlength"> too long</p>
+			 		<p ng-message="required"> Don't forget this blank! </p>
+			 	</div>		   
 		
 
+		<!-- <div><button type="submit">submit</button></div> -->
+		</form>
+		</div>
 
-  		
-
-	
-	
+		<div id="finishButtonStylingContainer">
+			<button id="finishButton" type="button" class="btn btn-secondary" ng-disabled="blanks.one.$invalid || blanks.two.$invalid || blanks.three.$invalid || blanks.four.$invalid || blanks.five.$invalid || blanks.six.$inavalid || blanks.seven.invalid || blanks.eight.$invalid || blanks.nine.$invalid || blanks.ten.$invalid || blanks.eleven.$invalid" ng-hide="complete" ng-click="complete = true" data-toggle="modal" data-target="#myModal">finish</button>
+		</div>
+		
+	</div>
+</div>
 </div>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Our Cafeteria</h4>
+       </div>
+      
+      <div class="modal-body">
+        <p ng-hide="blindMode" id="content-form">
+			Our school Cafeteria has really 
+			<span id="wordOne" class="word"><span ng-hide='one.length || clicked1'>1._____</span> <span ng-hide="clicked1">{{one}}</span>
+
+			<span ng-hide="!clicked1">{{pickAdj1}}</span> </span> food. 
+
+			Just thinking about it makes my stomach  
+			<span id="wordTwo" class="word"><span ng-hide='two.length || clicked2'>2._____</span>{{two}}<span ng-hide="!clicked2">{{pickVerb2}}</span></span>. 
+
+			The sphaghetti is 
+			 <span id="wordThree" class="word"><span ng-hide='three.length || clicked3'>3._____</span>{{three}}<span ng-hide="!clicked3">{{pickAdj3}}</span></span> and tastes like 
+			 
+			  
+			 <span id="wordFour" class="word"><span ng-hide='four.length || clicked4'>4._____</span>{{four}}<span ng-hide="!clicked4">{{pickNoun4}}</span></span>. 
+
+			One day, I swear one of my meatballs started to 
+			<span id="wordFive" class="word"><span ng-hide='five.length || clicked5'>5._____</span>{{five}}<span ng-hide="!clicked5">{{pickVerb5}}</span></span> ! 
+
+			The turkey tacos are totally 
+			<span id="wordSix" class="word"><span ng-hide='six.length || clicked6'>6._____</span>{{six}}<span ng-hide="!clicked6">{{pickAdj6}}</span></span> and look kind of like old 
+			
+
+			<span id="wordSeven" class="word"><span ng-hide='seven.length || clicked7'>7._____</span>{{seven}}<span ng-hide="!clicked7">{{pickNoun7}}</span></span>. 
+
+			My friend Dana actually likes the meatloaf, even though it's 
+			<span id="wordEight" class="word"><span ng-hide='eight.length || clicked8'>8._____</span>{{eight}}<span ng-hide="!clicked8">{{pickAdj8}}</span></span> and 
+			
+
+			<span id="wordNine" class="word"><span ng-hide='nine.length || clicked9'>9._____</span>{{nine}}<span ng-hide="!clicked9">{{pickAdj9}}</span></span>. 
+
+			I call it "mystery meatloaf" and think it's really made out of 
+
+			<span id="wordTen" class="word"><span ng-hide='ten.length || clicked10'>10._____</span>{{ten}}<span ng-hide="!clicked10">{{pickNoun10}}</span></span>. 
+
+			My dad said he'd make my lunches, but the first day, he made me a sandwich out of 
+
+			<span id="wordEleven"class="word"><span ng-hide='eleven.length || clicked11'>11._____</span>{{eleven}}<span ng-hide="!clicked11">{{pickNoun11}}</span></span> and peanut butter! I think I'd rather take my chances with the cafeteria.
+			</p>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+  
+  </div>
+
+</div>
  
