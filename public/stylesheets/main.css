@@ -163,7 +163,7 @@ ul.nav #aboutlink {
 }
 
 #blinders{
-	border-radius: 25px;
+	border-radius: 5px;
 	background-color: #199EFF; 
 	border: solid;
 	padding: .5em;
@@ -175,6 +175,8 @@ ul.nav #aboutlink {
 	text-align: center;
 	margin-bottom: 0.5em
 }
+
+
 
 .input-blank {
 	border-radius: 2.5px;
@@ -250,6 +252,10 @@ ul.nav #aboutlink {
 
 #finishButton:hover{
 	background-color: #FFFF00; 
+}
+
+#gimme-title{
+	color: #00B239 ;
 }
 
 .gimme-button{
