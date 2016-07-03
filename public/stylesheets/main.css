@@ -267,6 +267,7 @@ ul.nav #aboutlink {
 	border-style: solid;
 	border-width: 2px;
 	background-color: #FFFF00;
+	transform: rotate(90deg);
 }
 .gimme:hover{
 	background-color: #00B239; 
